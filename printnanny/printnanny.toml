@@ -5,7 +5,7 @@ overlay_udp_port = 20002
 video_udp_port = 20001
 video_height = 480
 video_width = 640
-video_framerate = 15
+video_framerate = 24
 hls_segments = "/var/run/printnanny-hls/segment%05d.ts"
 hls_playlist = "/var/run/printnanny-hls/playlist.m3u8"
 hls_playlist_root = "/printnanny-hls/"
@@ -13,12 +13,12 @@ hls_playlist_root = "/printnanny-hls/"
 [cam.tflite_model]
 label_file = "/usr/share/printnanny/model/labels.txt"
 model_file = "/usr/share/printnanny/model/model.tflite"
-nms_threshold = 50
+nms_threshold = 66
 tensor_batch_size = 40
 tensor_channels = 3
 tensor_height = 320
 tensor_width = 320
-tensor_framerate = 2
+tensor_framerate = 3
 
 [cam.video_src]
 src_type = "csi"
