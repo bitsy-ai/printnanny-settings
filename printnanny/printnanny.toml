@@ -1,30 +1,40 @@
-[cam]
+[camera]
 preview = false
-nats_server_uri = "nats://127.0.0.1:4223"
 overlay_udp_port = 20002
 video_udp_port = 20001
-video_height = 480
-video_width = 640
 video_framerate = 24
-hls_segments = "/var/run/printnanny-hls/segment%05d.ts"
-hls_playlist = "/var/run/printnanny-hls/playlist.m3u8"
-hls_playlist_root = "/printnanny-hls/"
 
-[cam.tflite_model]
+[camera.detection]
+nats_server_uri = "nats://127.0.0.1:4223"
 label_file = "/usr/share/printnanny/model/labels.txt"
 model_file = "/usr/share/printnanny/model/model.tflite"
 nms_threshold = 66
 tensor_batch_size = 40
-tensor_channels = 3
+tensor_framerate = 2
 tensor_height = 320
 tensor_width = 320
-tensor_framerate = 3
+overlay = true
+graphs = true
 
-[cam.video_src]
+[camera.video_src]
 src_type = "csi"
 index = 0
 device_name = "/base/soc/i2c0mux/i2c@1/imx219@10"
 label = "imx219"
+
+[camera.video_src.caps]
+media_type = "video/x-raw"
+format = "YUY2"
+width = 640
+height = 480
+
+[camera.hls]
+hls_segments = "/var/run/printnanny-hls/segment%05d.ts"
+hls_playlist = "/var/run/printnanny-hls/playlist.m3u8"
+hls_playlist_root = "/printnanny-hls/"
+
+[cloud]
+api_base_path = "https://printnanny.ai"
 
 [git]
 remote = "https://github.com/bitsy-ai/printnanny-settings.git"
@@ -63,3 +73,4 @@ enabled = true
 install_dir = "/home/printnanny/.octoprint"
 settings_file = "/home/printnanny/.config/printnanny/vcs/octoprint/octoprint.yaml"
 settings_format = "yaml"
+venv = "/home/printnanny/octoprint-venv"
