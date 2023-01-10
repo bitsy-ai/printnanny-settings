@@ -1,8 +1,8 @@
 ---
 server:
   commands:
-    systemShutdownCommand: sudo shutdown -h now
-    systemRestartCommand: sudo shutdown -r now
+    systemShutdownCommand: sudo /sbin/shutdown -h now
+    systemRestartCommand: sudo /sbin/shutdown -r now
     serverRestartCommand: sudo systemctl restart octoprint.service
 
 # https://docs.octoprint.org/en/master/configuration/config_yaml.html?highlight=logs#config-yaml
@@ -33,3 +33,8 @@ events:
 
 webcam:
   stream: /printnanny-hls/playlist.m3u8
+
+plugins:
+  discovery:
+    publicPort: 80
+    pathPrefix: /octoprint/
