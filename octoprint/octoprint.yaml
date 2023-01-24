@@ -33,7 +33,7 @@ events:
 
 webcam:
   stream: /printnanny-hls/playlist.m3u8
-  snapshot: /printnannny-snapshot/snapshot.jpg
+  snapshot: /printnannny-snapshot/jpeg
 
 plugins:
   discovery:
