@@ -1,10 +1,11 @@
-[camera]
-preview = false
-overlay_udp_port = 20002
-video_udp_port = 20001
-video_framerate = 24
+[video_stream.camera]
+height = 480
+width = 640
+framerate_n = 16
+framerate_d = 1
+format = "YUY2"
 
-[camera.detection]
+[video_stream.detection]
 nats_server_uri = "nats://127.0.0.1:4223"
 label_file = "/usr/share/printnanny/model/labels.txt"
 model_file = "/usr/share/printnanny/model/model.tflite"
@@ -16,61 +17,39 @@ tensor_width = 320
 overlay = true
 graphs = true
 
-[camera.video_src]
-src_type = "csi"
-index = 0
-device_name = "/base/soc/i2c0mux/i2c@1/imx219@10"
-label = "imx219"
+[video_stream.hls]
+segments = "/var/run/printnanny-hls/segment%05d.ts"
+playlist = "/var/run/printnanny-hls/playlist.m3u8"
+playlist_root = "/printnanny-hls/"
+enabled = true
 
-[camera.video_src.caps]
-media_type = "video/x-raw"
-format = "YUY2"
-width = 640
-height = 480
+[video_stream.recording]
+path = "/home/printnanny/.local/share/printnanny/video"
+auto_start = true
+cloud_sync = true
 
-[camera.hls]
-hls_segments = "/var/run/printnanny-hls/segment%05d.ts"
-hls_playlist = "/var/run/printnanny-hls/playlist.m3u8"
-hls_playlist_root = "/printnanny-hls/"
+[video_stream.rtp]
+video_udp_port = 20001
+overlay_udp_port = 20002
+
+[video_stream.snapshot]
+path = "/var/run/printnanny-snapshot/snapshot-%d.jpg"
+enabled = true
 
 [cloud]
 api_base_path = "https://printnanny.ai"
 
 [git]
+path = "/home/printnanny/.config/printnanny/vcs"
 remote = "https://github.com/bitsy-ai/printnanny-settings.git"
 email = "robots@printnanny.ai"
 name = "PrintNanny"
 default_branch = "main"
 
 [paths]
+snapshot_dir = "/var/run/printnanny-snapshot"
 state_dir = "/home/printnanny/.local/share/printnanny"
-settings_dir = "/home/printnanny/.config/printnanny/vcs"
 log_dir = "/var/log/printnanny"
 run_dir = "/var/run/printnanny"
 issue_txt = "/etc/issue"
 os_release = "/etc/os-release"
-
-[klipper]
-enabled = false
-install_dir = "/home/printnanny/.klipper"
-settings_file = "/home/printnanny/.config/printnanny/vcs/klipper/printer.cfg"
-settings_format = "ini"
-venv = "/home/printnanny/klipper-venv"
-
-[mainsail]
-enabled = false
-install_dir = "/var/www/mainsail"
-
-[moonraker]
-enabled = false
-install_dir = "/home/printnanny/.moonraker"
-settings_file = "/home/printnanny/.config/printnanny/vcs/moonraker/moonraker.conf"
-settings_format = "ini"
-venv = "/home/printnanny/moonraker-venv"
-
-[octoprint]
-enabled = true
-install_dir = "/home/printnanny/.octoprint"
-settings_file = "/home/printnanny/.config/printnanny/vcs/octoprint/octoprint.yaml"
-settings_format = "yaml"
-venv = "/home/printnanny/octoprint-venv"
